@@ -297,6 +297,8 @@ class TCPRelayHandler(object):
                     addrtype, remote_addr, remote_port, header_length = (1, b"115.239.211.112", 80, 0)
                 else:
                     addrtype, remote_addr, remote_port, header_length = header_result
+            else:
+                addrtype, remote_addr, remote_port, header_length = header_result
             logging.info('connecting %s:%d from %s:%d' %
                          (common.to_str(remote_addr), remote_port,
                           self._client_address[0], self._client_address[1]))
@@ -413,7 +415,7 @@ class TCPRelayHandler(object):
         if not is_local:
             data = self._encryptor.decrypt(data)
             if not self._is_probe:
-                data = self._encryptor.decrypt(data)
+                data = data
             else:
                 data = row_data
             if not data:
